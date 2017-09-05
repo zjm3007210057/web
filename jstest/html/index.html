@@ -60,6 +60,12 @@
         <input v-model="question"></p>
         <p>{{answer}}</p>
     </div>
+    <ul id="repeat-object" class="demo">
+        <!--value、key、index可以是任意不同的字符串-->
+        <li v-for="(value, key, index) in object">
+            {{ index }} : {{key}} : {{value}}
+        </li>
+    </ul>
 </body>
 <script type="text/javascript">
     var app = new Vue({
@@ -201,5 +207,16 @@
             )
         }
     });
+
+    var repeatObject = new Vue({
+        el: '#repeat-object',
+        data: {
+            object: {
+                firstName: 'John',
+                lastName: 'Doe',
+                age: 30
+            }
+        }
+    })
 </script>
 </html>

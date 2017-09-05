@@ -1,7 +1,5 @@
 <template>
-  <div class="header">
-    我是header
-  </div>
+  <div>I am goods</div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -9,5 +7,6 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" res="stylesheet/stylus">
+
 </style>
