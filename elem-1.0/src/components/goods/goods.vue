@@ -1,9 +1,10 @@
-<template>
+<template xmlns:v-el="http://www.w3.org/1999/xhtml">
   <div class="goods">
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
-        <li v-for="item in goods" class="menu-item">
-          <span class="text" border-1px>
+        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}"
+            @click="selectMenu($index)">
+          <span class="item-text" border-1px>
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span> {{item.name}}
           </span>
         </li>
@@ -11,7 +12,7 @@
     </div>
     <div class="foods-wrapper" v-el:foods-wrapper>
       <ul>
-        <li v-for="item in goods" class="food-list">
+        <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
             <li v-for="food in item.foods" class="food-item border-1px">
@@ -24,7 +25,8 @@
                   <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
-                  <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                  <span class="now">￥{{food.price}}</span><span class="old"
+                                                                v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
               </div>
             </li>
@@ -37,6 +39,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+
   const ERR_OK = 0
 
   export default {
@@ -47,7 +50,21 @@
     },
     data () {
       return {
-        goods: []
+        goods: [],
+        listHeight: [],
+        scrollY: 0
+      }
+    },
+    computed: {
+      currentIndex () {
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i]
+          let height2 = this.listHeight[i + 1]
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i
+          }
+        }
+        return 0
       }
     },
     created () {
@@ -58,15 +75,38 @@
           this.goods = response.data
           this.$nextTick(() => {
             this._initScroll()
+            this._calculateHeight()
           })
 //          console.log(this.goods)
         }
       })
     },
     methods: {
+      selectMenu (index) {
+        console.log(index)
+      },
       _initScroll () {
-        this.menuScroll = new BScroll(this.$els.menuWrapper, {})
-        this.foodsScroll = new BScroll(this.$els.foodsWrapper, {})
+        this.menuScroll = new BScroll(this.$els.menuWrapper, {
+          click: true
+        })
+
+        this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
+          probeType: 3
+        })
+
+        this.foodsScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y))
+        })
+      },
+      _calculateHeight () {
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+        let height = 0
+        this.listHeight.push(height)
+        for (let i = 0; i < foodList.length; i++) {
+          let item = foodList[i]
+          height += item.clientHeight
+          this.listHeight.push(height)
+        }
       }
     }
   }
@@ -93,6 +133,14 @@
         width: 56px
         line-height: 14px
         padding: 0 12px
+        &.current
+          position: relative
+          z-index: 10px
+          margin-top: -1px
+          background: #fff
+          font-weight: 700
+          .item-text
+            border-none()
         .icon
           display: inline-block
           width: 12px
@@ -124,7 +172,7 @@
         line-height: 26px
         border-left: 2px solid #d9dde1
         font-size: 12px
-        color: rgb(147 ,153, 159)
+        color: rgb(147, 153, 159)
         background: #f3f5f7
       .food-item
         display: flex
@@ -153,7 +201,7 @@
             margin-bottom: 8px
             line-height: 12px
           .extra
-            .count
+            &.count
               margin-right: 12px
           .price
             font-weight: 700
