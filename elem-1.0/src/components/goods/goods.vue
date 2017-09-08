@@ -3,7 +3,7 @@
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
         <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}"
-            @click="selectMenu($index)">
+            @click="selectMenu($index, $event)">
           <span class="item-text" border-1px>
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span> {{item.name}}
           </span>
@@ -34,11 +34,13 @@
         </li>
       </ul>
     </div>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+  import shopcart from 'components/shopcart/shopcart'
 
   const ERR_OK = 0
 
@@ -82,8 +84,15 @@
       })
     },
     methods: {
-      selectMenu (index) {
-        console.log(index)
+      selectMenu (index, event) {
+        // 浏览器原生的点击事件没有『_constructed』这个属性，只有当自己开发的时候才会有这个属性，
+        // 利用这个可以把浏览器原生的点击事件直接返回，这样可避免点击一次却触发两次操作
+        if (!event._constructed) {
+          return
+        }
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
       },
       _initScroll () {
         this.menuScroll = new BScroll(this.$els.menuWrapper, {
@@ -108,6 +117,9 @@
           this.listHeight.push(height)
         }
       }
+    },
+    components: {
+      shopcart: shopcart
     }
   }
 </script>
@@ -141,6 +153,7 @@
           font-weight: 700
           .item-text
             border-none()
+            background: #449fdb
         .icon
           display: inline-block
           width: 12px
