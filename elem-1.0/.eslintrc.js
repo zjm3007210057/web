@@ -21,6 +21,7 @@ module.exports = {
     'space-before-function-paren': 0,
     'indent': 0,
     "space-infix-ops": 0,
-    "keyword-spacing": 0
+    "keyword-spacing": 0,
+    "no-trailing-spaces": 0
   }
 }
