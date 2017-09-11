@@ -4,8 +4,8 @@
       <ul>
         <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}"
             @click="selectMenu($index, $event)">
-          <span class="item-text" border-1px>
-            <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span> {{item.name}}
+          <span class="item-text border-1px">
+            <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
         </li>
       </ul>
@@ -16,8 +16,9 @@
           <h1 class="title">{{item.name}}</h1>
           <ul>
             <li @click="selectFood(food, $event)" v-for="food in item.foods" class="food-item border-1px">
-              <div class="icon"></div>
-              <img width="57" height="57" :src="food.icon">
+              <div class="icon">
+                <img width="57" height="57" :src="food.icon">
+              </div>
               <div class="content">
                 <h2 class="name">{{food.name}}</h2>
                 <p class="desc">{{food.description}}</p>
@@ -108,7 +109,7 @@
         if (!event._constructed) {
           return
         }
-        let foodList = this.$els.foodsWrapper.getElementsByClassName('food.txt-list-hook')
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
       },
@@ -134,7 +135,7 @@
         })
       },
       _calculateHeight () {
-        let foodList = this.$els.foodsWrapper.getElementsByClassName('food.txt-list-hook')
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
         let height = 0
         this.listHeight.push(height)
         for (let i = 0; i < foodList.length; i++) {
