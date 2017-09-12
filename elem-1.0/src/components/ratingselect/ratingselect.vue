@@ -16,62 +16,62 @@
   const POSITIVE = 0
   const NEGATIVE = 1
   const ALL = 2
-    export default {
-      props: {
-        ratings: {
-          type: Array,
-          default() {
-            return []
-          }
-        },
-        selectType: {
-          type: Number,
-          default: ALL
-        },
-        onlyContent: {
-          type: Boolean,
-          default: false
-        },
-        desc: {
-          type: Object,
-          default() {
-            return {
-              all: '全部',
-              positive: '满意',
-              negative: '不满意'
-            }
-          }
+  export default {
+    props: {
+      ratings: {
+        type: Array,
+        default() {
+          return []
         }
       },
-      computed: {
-        positives() {
-          return this.ratings.filter((rating) => {
-            return rating.rateType === POSITIVE
-          })
-        },
-        negatives() {
-          return this.ratings.filter((rating) => {
-            return rating.rateType === NEGATIVE
-          })
-        }
+      selectType: {
+        type: Number,
+        default: ALL
       },
-      methods: {
-        select(type, event) {
-          if(!event._constructed) {
-            return
+      onlyContent: {
+        type: Boolean,
+        default: false
+      },
+      desc: {
+        type: Object,
+        default() {
+          return {
+            all: '全部',
+            positive: '满意',
+            negative: '不满意'
           }
-          this.selectType = type
-          this.$dispatch('ratingtype.select', type)
-        },
-        toggleContent(event) {
-          if(!event._constructed) {
-            return
-          }
-          this.onlyContent = !this.onlyContent
-          this.$dispatch('content.toggle', this.onlyContent)
         }
       }
+    },
+    computed: {
+      positives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE
+        })
+      },
+      negatives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NEGATIVE
+        })
+      }
+    },
+    methods: {
+      select(type, event) {
+        if (!event._constructed) {
+          return
+        }
+        this.selectType = type
+        this.$dispatch('ratingtype.select', type)
+      },
+      toggleContent(event) {
+        if (!event._constructed) {
+          return
+        }
+        this.onlyContent = !this.onlyContent
+        this.$dispatch('content.toggle', this.onlyContent)
+      }
     }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -81,7 +81,7 @@
     .rating-type
       padding: 18px 0
       margin: 0 18px
-      border-1px(rgba(7, 17, 27, 0.2))
+      border-1px(rgba(7, 17, 27, 0.1))
       font-size: 0
       .block
         display: inline-block
@@ -90,7 +90,7 @@
         line-height: 16px
         border-radius: 1px
         font-size: 12px
-        color: grb(77, 85, 93)
+        color: rgb(77, 85, 93)
         &.active
           color: #fff
         .count
@@ -119,6 +119,7 @@
         margin-right: 4px
         font-size: 24px
       .text
+        display: inline-block
         vertical-align: top
         font-size: 12px
 </style>

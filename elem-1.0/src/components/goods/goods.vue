@@ -3,8 +3,8 @@
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
         <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}"
-            @click="selectMenu($index, $event)">
-          <span class="item-text border-1px">
+            @click="selectMenu($index,$event)">
+          <span class="text border-1px">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
         </li>
@@ -15,7 +15,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li @click="selectFood(food, $event)" v-for="food in item.foods" class="food-item border-1px">
+            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
               </div>
@@ -171,9 +171,9 @@
   .goods
     display: flex
     position: absolute
-    width: 100%
     top: 174px
     bottom: 46px
+    width: 100%
     overflow: hidden
     .menu-wrapper
       flex: 0 0 80px
@@ -183,19 +183,19 @@
         display: table
         height: 54px
         width: 56px
-        line-height: 14px
         padding: 0 12px
+        line-height: 14px
         &.current
           position: relative
-          z-index: 10px
+          z-index: 10
           margin-top: -1px
           background: #fff
           font-weight: 700
-          .item-text
+          .text
             border-none()
-            background: #449fdb
         .icon
           display: inline-block
+          vertical-align: top
           width: 12px
           height: 12px
           margin-right: 2px
@@ -236,7 +236,7 @@
           border-none()
           margin-bottom: 0
         .icon
-          flex: 0 0 18px 18px
+          flex: 0 0 57px
           margin-right: 10px
         .content
           flex: 1
@@ -251,14 +251,14 @@
             font-size: 10px
             color: rgb(147, 153, 159)
           .desc
-            margin-bottom: 8px
             line-height: 12px
+            margin-bottom: 8px
           .extra
-            &.count
+            .count
               margin-right: 12px
           .price
             font-weight: 700
-            line-weight: 24px
+            line-height: 24px
             .now
               margin-right: 8px
               font-size: 14px

@@ -44,7 +44,7 @@
               </p>
             </li>
           </ul>
-          <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
         </div>
       </div>
     </div>
@@ -114,12 +114,18 @@
         }
       }
     },
-    event: {
+    events: {
       'ratingtype.select'(type) {
         this.selectType = type
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
       },
       'content.toggle'(onlyContent) {
         this.onlyContent = onlyContent
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
       }
     },
     components: {
