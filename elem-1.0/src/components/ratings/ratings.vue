@@ -1,11 +1,11 @@
 <template xmlns:v-el="http://www.w3.org/1999/xhtml">
   <div class="ratings" v-el:ratings>
-    <div class="rating-content">
+    <div class="ratings-content">
       <div class="overview">
         <div class="overview-left">
           <h1 class="score">{{seller.score}}</h1>
           <div class="title">综合评分</div>
-          <div class="rank">高于周边商家{{seller.rankRate}}</div>
+          <div class="rank">高于周边商家{{seller.rankRate}}%</div>
         </div>
         <div class="overview-right">
           <div class="score-wrapper">
@@ -74,7 +74,7 @@
     data() {
       return {
         ratings: [],
-        showFlag: false,
+//        showFlag: false,
         selectType: ALL,
         onlyContent: true
       }
@@ -138,6 +138,7 @@
   .ratings
     position: absolute
     top: 174px
+    bottom: 0
     left: 0
     width: 100%
     overflow: hidden
@@ -160,7 +161,7 @@
           color: rgb(255, 153, 0)
         .title
           margin-bottom: 8px
-          line-height: 12px
+          line-height: 18px
           font-size: 12px
           color: rgb(7, 17, 27)
         .rank
@@ -211,7 +212,7 @@
           flex: 0 0 28px
           width: 28px
           margin-right: 12px
-          .img
+          img
             border-radius: 50%
         .content
           position: relative
@@ -233,12 +234,12 @@
               vertical-align: top
               line-height: 12px
               font-size: 10px
-              color: rgb(147, 152, 159)
+              color: rgb(147, 153, 159)
           .text
             margin-bottom: 8px
             line-height: 18px
             color: rgb(7, 17, 27)
-            font-szie: 12px
+            font-size: 12px
           .recommend
             line-height: 16px
             font-size: 0
@@ -247,11 +248,11 @@
               margin: 0 8px 4px 0
               font-size: 9px
             .icon-thumb_up
-              coclor: rgb(0, 160, 220)
+              color: rgb(0, 160, 220)
             .item
               padding: 0 6px
               border: 1px solid rgba(7, 17, 27, 0.1)
-              border-redius: 1px
+              border-radius: 1px
               color: rgb(147, 150, 159)
               background: #fff
           .time
@@ -260,5 +261,5 @@
             right: 0
             line-height: 12px
             font-size: 10px
-            color: rgb(147, 150, 159)
+            color: rgb(147, 153, 159)
 </style>
